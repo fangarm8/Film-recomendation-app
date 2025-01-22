@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="all_films_header">
+    <h1>Все фильмы</h1>
+    <form method="GET" action="/">
+        <label for="sort_by" style="margin-right: 10px;">Сортировать по:</label>
+        <select name="sort_by" id="sort_by" onchange="this.form.submit()">
+            <option value="popularity"
+                    {%if sort_by=='popularity' %}
+                        selected
+                    {%endif%}>популярности
+            </option>
+            <option value="title"
+                    {% if sort_by=='title'%}
+                        selected
+                    {% endif %}>названию
+            </option>
+            <option value="release_date"
+                    {%if sort_by=='release_date' %}
+                        selected
+                    {%endif%}>дате выпуска
+            </option>
+        </select>
+    </form>
+</div>
+
+<div class="row">
+    {% for movie in movies %}
+    <div class="col-md-3 mb-4">
+        <a class="link" href="/{{ movie.id }}">
+            <div class="card">
+                <img src="../static/{{ movie.poster_path }}" class="card-img-top" alt="movie.title">
+                <div class="card-body">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
