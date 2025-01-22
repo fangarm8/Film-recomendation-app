@@ -27,5 +27,7 @@ def register_routes(app: Flask):
     @app.route("/search")
     def search():
         query = request.args.get('q', '')
-        movies = Movie.query.filter(Movie.keywords.ilike(f"%{query}%")).all()
+        movies1 = Movie.query.filter(Movie.title.ilike(f"%{query}%")).all()
+        movies2 = Movie.query.filter(Movie.keywords.ilike(f"%{query}%")).all()
+        movies = movies1 + movies2
         return render_template('main/search.html', movies=movies)
